@@ -99,6 +99,14 @@
 			<version>1.2.45</version>
 		</dependency>
 
+		<!-- AOP，用于注解授权配置 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.13</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<finalName>spring_shiro</finalName>
