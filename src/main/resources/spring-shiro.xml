@@ -7,8 +7,17 @@
                         http://www.springframework.org/schema/context  
                         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<bean id="credentialsMatcher"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="md5"></property>
+		<property name="hashIterations" value="1"></property>
+
+	</bean>
+
 	<bean id="myCustomRealm"
-		class="com.xywei.shiro.realm.MyCustomRealm"></bean>
+		class="com.xywei.shiro.realm.MyCustomRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher"></property>
+	</bean>
 
 	<bean id="securityManager"
 		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
