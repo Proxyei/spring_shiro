@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="myCustomRealm"
+		class="com.xywei.shiro.realm.MyCustomRealm"></bean>
+
+	<bean id="securityManager"
+		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="myCustomRealm"></property>
+	</bean>
+
+	<!-- 配置认证授权信息 -->
+	<bean id="shiroFilter"
+		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"></property>
+		<!-- 圈疑问，value是直接写.jsp还是写经过controller的？ answer：controller -->
+		<property name="loginUrl" value="index" />
+		<!--TODO 有何用？ -->
+		<property name="unauthorizedUrl" value="forbidden403.jsp" />
+		<property name="filterChainDefinitions">
+			<value>
+				/index=anon
+				/userLogin=anon
+				<!-- 上面的如果没有配置anon过滤器，则shiro会认为没登录，就会重复返回登录页面index -->
+				/* = authc
+			</value>
+		</property>
+
+	</bean>
+
+
+</beans>
