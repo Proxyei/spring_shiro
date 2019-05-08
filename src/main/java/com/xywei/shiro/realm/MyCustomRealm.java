@@ -11,8 +11,15 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.xywei.shiro.domain.User;
+import com.xywei.shiro.service.UserService;
 
 public class MyCustomRealm extends AuthorizingRealm {
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -25,12 +32,19 @@ public class MyCustomRealm extends AuthorizingRealm {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
 		String username = (String) usernamePasswordToken.getPrincipal();
 		// 模拟从数据库/缓存中取出密码
-		String password = "cd92a26534dba48cd785cdcc0b3e6bd1";
+		// String password = "cd92a26534dba48cd785cdcc0b3e6bd1";
+		//get password from database
+		String password = getUserPasswordByUsername(username);
 		// String password = "admin";
 		String realmName = "myCustomRealm";
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, realmName);
 		simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes("root"));
 		return simpleAuthenticationInfo;
+	}
+
+	private String getUserPasswordByUsername(String username) {
+		User user = userService.getUserByUsername(username);
+		return user == null ? null : user.getPassword();
 	}
 
 	@Test
