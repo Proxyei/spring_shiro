@@ -67,4 +67,10 @@ public class UserController {
 	public String userSelect() {
 		return "有user:select 权限";
 	}
+
+	@RequestMapping(value = "/userAndAdminTest", method = RequestMethod.GET)
+	@ResponseBody
+	public String userAndAdminTest() {
+		return "同时具备user/admin 权限";
+	}
 }

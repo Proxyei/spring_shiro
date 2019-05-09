@@ -13,7 +13,7 @@ public class PageController {
 
 	@RequestMapping("/forbidden403")
 	public String forbidden403() {
-		return "index";
+		return "forbidden403";
 	}
 
 }

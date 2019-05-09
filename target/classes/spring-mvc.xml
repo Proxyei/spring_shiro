@@ -13,6 +13,7 @@
                         http://www.springframework.org/schema/aop 
                         http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
+	<import resource="spring-shiro.xml" />
 	<!-- 开启注解 -->
 	<context:component-scan
 		base-package="com.xywei.shiro.web" />
@@ -48,8 +49,11 @@
 	<aop:config proxy-target-class="true" />
 	<!-- 保证 Shiro内部生命周期 -->
 	<bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<!-- 注解方式只能报错500，无法实现跳转 403页面 -->
 	<bean
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<!--TODO  为什么无法注入,为什么要此配置 -->
+		<property name="securityManager" ref="securityManager"></property>
 	</bean>
 
 
