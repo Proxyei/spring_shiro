@@ -73,4 +73,10 @@ public class UserController {
 	public String userAndAdminTest() {
 		return "同时具备user/admin 权限";
 	}
+
+	@RequestMapping(value = "/myRoleFilterTest", method = RequestMethod.GET)
+	@ResponseBody
+	public String myRoleFilterTest() {
+		return "同时具备user/admin/root 权限";
+	}
 }

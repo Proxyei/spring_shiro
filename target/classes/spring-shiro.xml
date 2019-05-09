@@ -40,10 +40,21 @@
 				/index=anon
 				/userLogin=anon
 				/userAndAdminTest=roles["user","admin"]
+				<!-- 因为没有manager，所以返回403页面 -->
+				/myRoleFilterTest=myRole["admin","user","manager"]
 				<!-- 上面的如果没有配置anon过滤器，则shiro会认为没登录，就会重复返回登录页面index -->
 				/* = authc
 			</value>
 		</property>
+		<!-- 自定义filter -->
+		<property name="filters">
+			<map>
+				<entry key="myRole"
+					value-ref="myCustomRoleAuthorizationFilter" />
+			</map>
+		</property>
 	</bean>
 
+	<bean id="myCustomRoleAuthorizationFilter"
+		class="com.xywei.shiro.filter.MyCustomRoleAuthorizationFilter"></bean>
 </beans>
