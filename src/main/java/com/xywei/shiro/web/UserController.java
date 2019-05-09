@@ -47,6 +47,13 @@ public class UserController {
 		return "有admin 权限";
 	}
 
+	@RequiresPermissions("admin:delete")
+	@RequestMapping(value = "/adminDelete", method = RequestMethod.GET)
+	@ResponseBody
+	public String adminDelete() {
+		return "有admin:delete权限";
+	}
+
 	@RequiresPermissions("admin:select")
 	@RequestMapping(value = "/adminSelect", method = RequestMethod.GET)
 	@ResponseBody

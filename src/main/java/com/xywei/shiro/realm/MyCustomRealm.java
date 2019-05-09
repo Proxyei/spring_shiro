@@ -36,15 +36,17 @@ public class MyCustomRealm extends AuthorizingRealm {
 		System.out.println("username===" + username);
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
+		// TODO 出大事了，没role角色权限的时候也能通过注解配置授权？？
 		Set<String> roles = new HashSet<String>();
 		roles.add("user");
-		roles.add("admin");
+		// roles.add("admin");
 		simpleAuthorizationInfo.setRoles(roles);
 
+		// TODO 没admin:delete权限也可以授权？原因，授权配置在了错误的地方，正确地方应该在spring-mvc.xml
 		Set<String> stringPermissions = new HashSet<String>();
 		stringPermissions.add("user:select");
 		stringPermissions.add("admin:select");
-
+		// stringPermissions.add("admin:delete");
 		simpleAuthorizationInfo.setStringPermissions(stringPermissions);
 
 		return simpleAuthorizationInfo;

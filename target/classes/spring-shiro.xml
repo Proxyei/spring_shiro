@@ -33,8 +33,8 @@
 		<property name="securityManager" ref="securityManager"></property>
 		<!-- 圈疑问，value是直接写.jsp还是写经过controller的？ answer：controller -->
 		<property name="loginUrl" value="index" />
-		<!--TODO 有何用？ -->
-		<property name="unauthorizedUrl" value="forbidden403.jsp" />
+		<!--TODO 有何用？ 先登录，登录之后如果没权限就跳转到此页面 -->
+		<property name="unauthorizedUrl" value="forbidden403" />
 		<property name="filterChainDefinitions">
 			<value>
 				/index=anon
@@ -43,16 +43,6 @@
 				/* = authc
 			</value>
 		</property>
-	</bean>
-
-	<!-- 开启AOP -->
-	<aop:config proxy-target-class="true" />
-	<!-- 配置注解授权 -->
-	<bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
-	<bean
-		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-		<property name="securityManager" ref="securityManager"></property>
-
 	</bean>
 
 </beans>
