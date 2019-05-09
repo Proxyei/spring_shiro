@@ -20,9 +20,11 @@
 			</label>
 		</div>
 		<div>
+			remember me:<input type="checkbox" name="rememberMe">
+		</div>
+		<div>
 			<input type="submit" name="submit" value="submit" />
 		</div>
-
 	</form>
 
 </body>

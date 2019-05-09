@@ -6,6 +6,7 @@ public class User {
 	private String username;
 	private String password;
 	private String passwordSalt;
+	private Boolean rememberMe;
 
 	public Integer getId() {
 		return id;
@@ -39,9 +40,17 @@ public class User {
 		this.passwordSalt = passwordSalt;
 	}
 
+	public Boolean getRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(Boolean rememberMe) {
+		this.rememberMe = rememberMe;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", passwordSalt=" + passwordSalt
-				+ "]";
+				+ ", rememberMe=" + rememberMe + "]";
 	}
 }
