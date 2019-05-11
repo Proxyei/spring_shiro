@@ -30,7 +30,7 @@ public class JedisUtil {
 	 * @param key
 	 * @param value
 	 */
-	public void saveSession(byte[] key, byte[] value) {
+	public void save(byte[] key, byte[] value) {
 
 		Jedis jedis = getResource();
 		jedis.set(key, value);
@@ -56,7 +56,7 @@ public class JedisUtil {
 	 * @param key
 	 * @return
 	 */
-	public byte[] getSession(byte[] key) {
+	public byte[] get(byte[] key) {
 		Jedis jedis = getResource();
 		byte[] value = jedis.get(key);
 		closeJedis(jedis);
@@ -74,7 +74,7 @@ public class JedisUtil {
 		closeJedis(jedis);
 	}
 
-	public Set<byte[]> getAllSessionKeys(String prefix) {
+	public Set<byte[]> getAllKeys(String prefix) {
 
 		Jedis jedis = getResource();
 		String pattern = prefix + "*";

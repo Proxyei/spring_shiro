@@ -37,15 +37,17 @@ public class MyCustomRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
 		// TODO 出大事了，没role角色权限的时候也能通过注解配置授权？？
-		Set<String> roles = new HashSet<String>();
-		roles.add("user");
+		// Set<String> roles = new HashSet<String>();
+		Set<String> roles = getRolesByUsername(username);
+		// roles.add("user");
 		// roles.add("admin");
 		simpleAuthorizationInfo.setRoles(roles);
 
 		// TODO 没admin:delete权限也可以授权？原因，授权配置在了错误的地方，正确地方应该在spring-mvc.xml
-		Set<String> stringPermissions = new HashSet<String>();
-		stringPermissions.add("user:select");
-		stringPermissions.add("admin:select");
+		// Set<String> stringPermissions = new HashSet<String>();
+		Set<String> stringPermissions = getPermissionByUsername(username);
+		// stringPermissions.add("user:select");
+		// stringPermissions.add("admin:select");
 		// stringPermissions.add("admin:delete");
 		simpleAuthorizationInfo.setStringPermissions(stringPermissions);
 
@@ -71,6 +73,22 @@ public class MyCustomRealm extends AuthorizingRealm {
 	private String getUserPasswordByUsername(String username) {
 		User user = userService.getUserByUsername(username);
 		return user == null ? null : user.getPassword();
+	}
+
+	private Set<String> getRolesByUsername(String username) {
+		System.err.println("==================角色权限数据库中获取======================");
+		Set<String> roles = new HashSet<String>();
+		roles.add("user");
+		// roles.add("admin");
+		return roles;
+	}
+
+	private Set<String> getPermissionByUsername(String username) {
+		System.err.println("==================资源权限数据库中获取======================");
+		Set<String> stringPermissions = new HashSet<String>();
+		stringPermissions.add("user:select");
+		stringPermissions.add("admin:select");
+		return stringPermissions;
 	}
 
 	@Test

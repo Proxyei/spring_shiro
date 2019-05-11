@@ -27,6 +27,7 @@
 		<property name="realm" ref="myCustomRealm"></property>
 		<property name="rememberMeManager"
 			ref="cookieRememberMeManager"></property>
+		<property name="cacheManager" ref="redisCacheManager"></property>
 		<property name="sessionManager" ref="sessionManager"></property>
 	</bean>
 
@@ -86,7 +87,8 @@
 		class="com.xywei.shiro.session.MyCustomSessionManager">
 		<property name="sessionDAO" ref="sessionDAO"></property>
 	</bean>
-	<!-- <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager"> 
-		<property name="sessionDAO" ref="sessionDAO"></property> </bean> -->
+
+	<bean id="redisCacheManager"
+		class="com.xywei.shiro.cache.MyCustomCacheManager"></bean>
 
 </beans>

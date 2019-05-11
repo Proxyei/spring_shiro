@@ -42,7 +42,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 			// 为什么要是字节，不是字符串
 			byte[] key = getKey(session.getId().toString());
 			byte[] value = SerializationUtils.serialize(session);
-			jedisUtil.saveSession(key, value);
+			jedisUtil.save(key, value);
 			jedisUtil.expire(key, 120);
 		}
 
@@ -75,14 +75,14 @@ public class RedisSessionDao extends AbstractSessionDAO {
 		System.out.println("===get all session===");
 		Set<Session> sessions = new HashSet<>();
 
-		Set<byte[]> keys = jedisUtil.getAllSessionKeys(SHIRO_SESSION_PREFIX);
+		Set<byte[]> keys = jedisUtil.getAllKeys(SHIRO_SESSION_PREFIX);
 
 		if (CollectionUtils.isEmpty(keys)) {
 			return null;
 
 		} else {
 			for (byte[] key : keys) {
-				byte[] value = jedisUtil.getSession(key);
+				byte[] value = jedisUtil.get(key);
 				Session session = (Session) SerializationUtils.deserialize(value);
 				sessions.add(session);
 			}
@@ -114,7 +114,7 @@ public class RedisSessionDao extends AbstractSessionDAO {
 			return null;
 		}
 		byte[] key = getKey(sessionId.toString());
-		byte[] value = jedisUtil.getSession(key);
+		byte[] value = jedisUtil.get(key);
 
 		Session session = (Session) SerializationUtils.deserialize(value);
 
