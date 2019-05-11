@@ -20,6 +20,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	private JedisUtil jedisUtil;
 
 	private byte[] getKey(K k) {
+		System.err.println("================================k instanceof string========================" + (k instanceof String));
 		if (k instanceof String) {
 			byte[] key = (SHIRO_CACHE_PREFIX + k).getBytes();
 			return key;
@@ -32,7 +33,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	public V get(K k) throws CacheException {
 
 		System.err.println("================== 查询缓存 ====================");
-		
+
 		byte[] key = getKey(k);
 		byte[] value = jedisUtil.get(key);
 
@@ -46,8 +47,9 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	@Override
 	public V put(K k, V v) throws CacheException {
 
-		System.err.println("================== 添加缓存 ====================");
+		System.err.println("================== 添加缓存 ====================k:" + k);
 		byte[] key = getKey(k);
+		System.err.println("================== 添加缓存 ====================key:" + key);
 		byte[] value = SerializationUtils.serialize(v);
 		jedisUtil.save(key, value);
 		jedisUtil.expire(key, 600);
