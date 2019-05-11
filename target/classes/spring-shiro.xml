@@ -27,6 +27,7 @@
 		<property name="realm" ref="myCustomRealm"></property>
 		<property name="rememberMeManager"
 			ref="cookieRememberMeManager"></property>
+		<property name="sessionManager" ref="sessionManager"></property>
 	</bean>
 
 	<!-- 配置认证授权信息 -->
@@ -74,7 +75,18 @@
 		class="org.apache.shiro.web.servlet.SimpleCookie">
 		<!-- 为什么非得叫rmemberme -->
 		<constructor-arg value="myRememberMe2019" />
-		<property name="maxAge" value="30" />
+		<!-- 浏览器cookie存活时间 -->
+		<property name="maxAge" value="600" />
 	</bean>
+
+	<bean id="sessionDAO"
+		class="com.xywei.shiro.session.RedisSessionDao" />
+
+	<bean id="sessionManager"
+		class="com.xywei.shiro.session.MyCustomSessionManager">
+		<property name="sessionDAO" ref="sessionDAO"></property>
+	</bean>
+	<!-- <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager"> 
+		<property name="sessionDAO" ref="sessionDAO"></property> </bean> -->
 
 </beans>

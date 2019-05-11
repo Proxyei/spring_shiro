@@ -14,6 +14,7 @@ public class PageController {
 		System.out.println("跳转首页");
 		Subject subject = SecurityUtils.getSubject();
 		if (subject.isRemembered()) {
+			System.err.println("使用cookie登录认证了");
 			String username = (String) subject.getPrincipal();
 			model.addAttribute("username", username);
 		}

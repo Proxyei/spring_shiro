@@ -20,7 +20,7 @@ public class UserController {
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public String userLogin(User user, Model model) {
 
-		System.out.println(user);
+		System.out.println("使用密码登录" + user);
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(), user.getPassword());
 		boolean rememberMe = (null == user.getRememberMe()) ? false : true;

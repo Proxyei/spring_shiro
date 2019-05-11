@@ -106,6 +106,13 @@
 			<version>1.8.13</version>
 		</dependency>
 
+		<!-- redis，用于session manager，sessionDao -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
