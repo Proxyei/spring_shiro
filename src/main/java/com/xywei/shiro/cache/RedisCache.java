@@ -20,7 +20,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	private JedisUtil jedisUtil;
 
 	private byte[] getKey(K k) {
-		System.err.println("================================k instanceof string========================" + (k instanceof String));
+		System.err.println(
+				"================================k instanceof string========================" + (k instanceof String));
 		if (k instanceof String) {
 			byte[] key = (SHIRO_CACHE_PREFIX + k).getBytes();
 			return key;

@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 
 public class MyCustomRoleAuthorizationFilter extends AuthorizationFilter {
 
-
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {

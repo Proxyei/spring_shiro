@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
                         http://www.springframework.org/schema/context  
@@ -10,30 +8,25 @@
                         http://www.springframework.org/schema/aop 
                         http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
-	<bean id="credentialsMatcher"
-		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 		<property name="hashAlgorithmName" value="md5"></property>
 		<property name="hashIterations" value="1"></property>
 
 	</bean>
 
-	<bean id="myCustomRealm"
-		class="com.xywei.shiro.realm.MyCustomRealm">
+	<bean id="myCustomRealm" class="com.xywei.shiro.realm.MyCustomRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher"></property>
 	</bean>
 
-	<bean id="securityManager"
-		class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="myCustomRealm"></property>
-		<property name="rememberMeManager"
-			ref="cookieRememberMeManager"></property>
+		<property name="rememberMeManager" ref="cookieRememberMeManager"></property>
 		<property name="cacheManager" ref="redisCacheManager"></property>
 		<property name="sessionManager" ref="sessionManager"></property>
 	</bean>
 
 	<!-- 配置认证授权信息 -->
-	<bean id="shiroFilter"
-		class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager"></property>
 		<!-- 圈疑问，value是直接写.jsp还是写经过controller的url？ answer：controller url -->
 		<property name="loginUrl" value="index" />
@@ -57,38 +50,31 @@
 		<!-- 自定义filter -->
 		<property name="filters">
 			<map>
-				<entry key="myRole"
-					value-ref="myCustomRoleAuthorizationFilter" />
+				<entry key="myRole" value-ref="myCustomRoleAuthorizationFilter" />
 			</map>
 		</property>
 	</bean>
 
-	<bean id="myCustomRoleAuthorizationFilter"
-		class="com.xywei.shiro.filter.MyCustomRoleAuthorizationFilter"></bean>
+	<bean id="myCustomRoleAuthorizationFilter" class="com.xywei.shiro.filter.MyCustomRoleAuthorizationFilter"></bean>
 	<!-- rememberMe -->
 
-	<bean id="cookieRememberMeManager"
-		class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+	<bean id="cookieRememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
 		<property name="cookie" ref="simpleCookie" />
 	</bean>
 
-	<bean id="simpleCookie"
-		class="org.apache.shiro.web.servlet.SimpleCookie">
+	<bean id="simpleCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<!-- 为什么非得叫rmemberme -->
 		<constructor-arg value="myRememberMe2019" />
 		<!-- 浏览器cookie存活时间 -->
 		<property name="maxAge" value="600" />
 	</bean>
 
-	<bean id="sessionDAO"
-		class="com.xywei.shiro.session.RedisSessionDao" />
+	<bean id="sessionDAO" class="com.xywei.shiro.session.RedisSessionDao" />
 
-	<bean id="sessionManager"
-		class="com.xywei.shiro.session.MyCustomSessionManager">
+	<bean id="sessionManager" class="com.xywei.shiro.session.MyCustomSessionManager">
 		<property name="sessionDAO" ref="sessionDAO"></property>
 	</bean>
 
-	<bean id="redisCacheManager"
-		class="com.xywei.shiro.cache.MyCustomCacheManager"></bean>
+	<bean id="redisCacheManager" class="com.xywei.shiro.cache.MyCustomCacheManager"></bean>
 
 </beans>

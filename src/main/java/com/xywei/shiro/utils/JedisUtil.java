@@ -38,8 +38,9 @@ public class JedisUtil {
 	}
 
 	/**
-	 * 设置session过期时间
-	 * TODO 过期时间是指一段时间time后不对系统进行操作，那么redis中 session会被删除，假如一直操作页面，那么session也不会失效。
+	 * 设置session过期时间 TODO 过期时间是指一段时间time后不对系统进行操作，那么redis中
+	 * session会被删除，假如一直操作页面，那么session也不会失效。
+	 * 
 	 * @param key
 	 * @param time
 	 */
