@@ -11,7 +11,7 @@
 	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 		<property name="hashAlgorithmName" value="md5"></property>
 		<property name="hashIterations" value="1"></property>
-
+		<property name="hashSalted" value="true"></property>
 	</bean>
 
 	<bean id="myCustomRealm" class="com.xywei.shiro.realm.MyCustomRealm">

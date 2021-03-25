@@ -29,7 +29,8 @@ public class UserController {
 			usernamePasswordToken.setRememberMe(rememberMe);
 			subject.login(usernamePasswordToken);
 		} catch (AuthenticationException e) {
-			return e.getMessage();
+			//TODO 做登录信息处理
+			return "index";
 		}
 
 		model.addAttribute("username", user.getUsername());

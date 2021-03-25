@@ -13,7 +13,7 @@
                         ">
 
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-		<property name="url" value="jdbc:mysql://localhost:3306/imooc_shiro" />
+		<property name="url" value="jdbc:mysql://localhost:3306/my_shiro" />
 		<property name="username" value="root" />
 		<property name="password" value="xieSHI123321" />
 	</bean>

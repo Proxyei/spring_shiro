@@ -57,16 +57,21 @@ public class MyCustomRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
+		SimpleAuthenticationInfo simpleAuthenticationInfo = null;
+
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
 		String username = (String) usernamePasswordToken.getPrincipal();
-		// 模拟从数据库/缓存中取出密码
-		// String password = "cd92a26534dba48cd785cdcc0b3e6bd1";
-		// get password from database
-		String password = getUserPasswordByUsername(username);
-		// String password = "admin";
+
+		User user = userService.getUserByUsername(username);
+		if (user == null) {
+			return null;
+		}
+		String password = user.getPassword();
+		String passwordSalt = user.getPasswordSalt();
 		String realmName = "myCustomRealm";
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, realmName);
-		simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes("root"));
+
+		simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, realmName);
+		simpleAuthenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(passwordSalt));
 		return simpleAuthenticationInfo;
 	}
 
@@ -95,7 +100,7 @@ public class MyCustomRealm extends AuthorizingRealm {
 	public void testMD5() {
 
 		String algorithmName = "md5";
-		String password = "admin";
+		String password = "a";// 8a43b3f31f33900f34eefa1861f59352
 		String salt = "root";
 		int hashIterations = 1;
 		SimpleHash hash = new SimpleHash(algorithmName, password, salt, hashIterations);

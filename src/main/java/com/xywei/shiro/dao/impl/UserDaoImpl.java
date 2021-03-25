@@ -20,21 +20,28 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserByUsername(String username) {
 
-		String sql = "select * from users where username=?";
+		String sql = "select * from user where username=?";
 
-		User user = jdbcTemplate.queryForObject(sql, new String[] { username }, new RowMapper<User>() {
+		User user = null;
+		try {
+			user = jdbcTemplate.queryForObject(sql, new String[] { username }, new RowMapper<User>() {
 
-			@Override
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				@Override
+				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+					if (rs.getRow() == 0) {
+						return null;
+					}
+					User user = new User();
+					user.setId(rs.getInt("id"));
+					user.setUsername(rs.getString("username"));
+					user.setPassword(rs.getString("password"));
+					user.setPasswordSalt(rs.getString("password_salt"));
+					return user;
+				}
+			});
 
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setUsername(rs.getString("username"));
-				user.setPassword(rs.getString("password"));
-				user.setPasswordSalt(rs.getString("password_salt"));
-				return user;
-			}
-		});
+		} catch (Exception e) {
+		}
 
 		return user;
 	}
